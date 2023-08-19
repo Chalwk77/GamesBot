@@ -11,10 +11,11 @@ import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 import java.util.*;
 
-import static com.chalwk.Main.*;
+import static com.chalwk.Main.getBotAvatar;
+import static com.chalwk.Main.getBotName;
 import static com.chalwk.games.tictactoe.TicTacToe.createBoard;
 import static com.chalwk.games.tictactoe.TicTacToe.initTicTacToe;
-import static com.chalwk.util.util.privateMessage;
+import static com.chalwk.util.util.*;
 
 public class Game {
 

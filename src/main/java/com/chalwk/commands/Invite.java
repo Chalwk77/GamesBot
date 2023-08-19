@@ -13,10 +13,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.chalwk.Main.addGame;
-import static com.chalwk.Main.games;
 import static com.chalwk.games.Layout.boards;
 import static com.chalwk.games.Layout.gallows;
+import static com.chalwk.util.util.addGame;
+import static com.chalwk.util.util.games;
 
 public class Invite implements CommandInterface {
 

@@ -6,9 +6,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
-import static com.chalwk.Main.games;
-import static com.chalwk.Main.removeGame;
 import static com.chalwk.games.Layout.WINNING_COMBINATIONS;
+import static com.chalwk.util.util.games;
+import static com.chalwk.util.util.removeGame;
 
 public class GameOver {
     private static void endGame(Game game, int state, ButtonInteractionEvent event) {

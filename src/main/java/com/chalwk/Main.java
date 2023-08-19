@@ -2,7 +2,6 @@
 
 package com.chalwk;
 
-import com.chalwk.games.Game;
 import com.chalwk.listeners.CommandInterface;
 import com.chalwk.listeners.CommandManager;
 import com.chalwk.listeners.EventListeners;
@@ -30,8 +29,6 @@ import static com.chalwk.util.FileIO.readJSONObject;
 import static org.reflections.Reflections.log;
 
 public class Main {
-
-    public static Game[] games = new Game[0];
     public static JSONObject hangmanConfig;
     public static JSONObject ticTacToeConfig;
     public static JSONArray words;
@@ -65,24 +62,6 @@ public class Main {
 
     public static Guild getGuild(SlashCommandInteractionEvent event) {
         return event.getGuild();
-    }
-
-    public static Game[] addGame(Game[] games, Game game) {
-        Game[] newGames = new Game[games.length + 1];
-        System.arraycopy(games, 0, newGames, 0, games.length);
-        newGames[games.length] = game;
-        return newGames;
-    }
-
-    public static Game[] removeGame(Game[] games, Game game) {
-        Game[] newGames = new Game[games.length - 1];
-        int index = 0;
-        for (Game g : games) {
-            if (g != game) {
-                newGames[index++] = g;
-            }
-        }
-        return newGames;
     }
 
     @NotNull

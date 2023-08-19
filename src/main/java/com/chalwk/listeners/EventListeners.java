@@ -15,13 +15,13 @@ public class EventListeners extends ListenerAdapter {
     @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         System.out.println("""
-                __________________________________________________________
-                Copyright (c) 2023, Tic Tac Toe, Jericho Crosby
+                _______________________________________________
                   ___   _   __  __ ___ ___   ___  ___ _____
                  / __| /_\\ |  \\/  | __/ __| | _ )/ _ \\_   _|
                 | (_ |/ _ \\| |\\/| | _|\\__ \\ | _ \\ (_) || |
                  \\___/_/ \\_\\_|  |_|___|___/ |___/\\___/ |_|
-                __________________________________________________________""");
+                Copyright (c) 2023, GamesBot. Jericho Crosby
+                _______________________________________________""");
     }
 
     @Override

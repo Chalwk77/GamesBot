@@ -5,9 +5,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-import static com.chalwk.Main.games;
 import static com.chalwk.games.tictactoe.TicTacToe.makeMove;
 import static com.chalwk.games.tictactoe.TicTacToe.moveAllowed;
+import static com.chalwk.util.util.games;
 
 public class ButtonClick {
 

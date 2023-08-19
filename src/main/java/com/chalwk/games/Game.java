@@ -7,9 +7,10 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import static com.chalwk.Main.getBotAvatar;
 import static com.chalwk.Main.getBotName;
@@ -19,7 +20,6 @@ import static com.chalwk.util.util.*;
 
 public class Game {
 
-    public char[][] board;
     public final String[] letters = { // tictactoe
             "A", "B", "C", "D",
             "E", "F", "G", "H",
@@ -33,16 +33,14 @@ public class Game {
     public final char player2 = 'O'; // tictactoe
     public final char filler = '-'; // tictactoe
     public final String challengerID;
-    //==========================================================//
     public final String opponentID;
     final String challengerName;
     final String opponentName;
     final String gameName;
     final int gameID;
     private final SlashCommandInteractionEvent event;
-    private final OptionMapping board_size;
-    private final OptionMapping gallows_design;
     private final Guild guild;
+    public char[][] board; // tictactoe
     public char symbol; // tictactoe
     public Map<String, int[]> cell_indicators = new HashMap<>(); // tictactoe
     public String whos_turn;
@@ -54,8 +52,6 @@ public class Game {
         this.event = event;
         this.challengerID = challengerID;
         this.opponentID = opponentID;
-        this.board_size = boardSize;
-        this.gallows_design = gallowsDesign;
         this.challengerName = challengerName;
         this.opponentName = opponentName;
         this.gameName = gameName;
@@ -64,7 +60,7 @@ public class Game {
         this.gameID = games.length;
 
         if (this.gameName.equals("Tic-Tac-Toe")) {
-            createBoard(this.board_size, this);
+            createBoard(boardSize, this);
         }
     }
 
@@ -92,16 +88,6 @@ public class Game {
         embed.setFooter(botName + " - Copyright (c) 2023. Jericho Crosby", botAvatar);
         embed.setColor(0x000000);
         return embed;
-    }
-
-    public void showSubmission(SlashCommandInteractionEvent event) {
-        EmbedBuilder embed = getEmbed();
-        embed.setDescription("You have been invited to play " + this.gameName);
-        List<Button> buttons = new ArrayList<>();
-        buttons.add(Button.success("accept", "\uD83D\uDFE2 Accept"));
-        buttons.add(Button.danger("decline", "\uD83D\uDD34 Decline"));
-        buttons.add(Button.secondary("cancel", "\uD83D\uDEAB Cancel"));
-        event.replyEmbeds(embed.build()).addActionRow(buttons).queue();
     }
 
     public void acceptInvitation(ButtonInteractionEvent event) {

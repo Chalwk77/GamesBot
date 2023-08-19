@@ -4,6 +4,7 @@ package com.chalwk.games.tictactoe;
 import com.chalwk.games.Game;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
@@ -189,5 +190,14 @@ public class TicTacToe {
         String err = "Board size not supported: (" + len + "x" + len + ")";
         if (len < 3 || len > 5) throw new IllegalStateException(err);
         return buildBoard(game);
+    }
+
+    public static void showTicTacToeSubmission(SlashCommandInteractionEvent event, Game game) {
+        EmbedBuilder embed = getEmbedBuilder(game);
+        List<Button> buttons = new ArrayList<>();
+        buttons.add(Button.success("accept", "\uD83D\uDFE2 Accept"));
+        buttons.add(Button.danger("decline", "\uD83D\uDD34 Decline"));
+        buttons.add(Button.secondary("cancel", "\uD83D\uDEAB Cancel"));
+        event.replyEmbeds(embed.build()).addActionRow(buttons).queue();
     }
 }

@@ -15,7 +15,7 @@ import java.util.Random;
 import static com.chalwk.Main.getBotAvatar;
 import static com.chalwk.Main.getBotName;
 import static com.chalwk.games.tictactoe.TicTacToe.createBoard;
-import static com.chalwk.games.tictactoe.TicTacToe.initTicTacToe;
+import static com.chalwk.games.tictactoe.TicTacToe.startTicTacToe;
 import static com.chalwk.util.util.*;
 
 public class Game {
@@ -93,18 +93,18 @@ public class Game {
     public void acceptInvitation(ButtonInteractionEvent event) {
         event.getMessage().delete().queue();
         if (this.gameName.equals("Tic-Tac-Toe")) {
-            initTicTacToe(event, this);
+            startTicTacToe(event, this);
         }
     }
 
     public void declineInvitation(ButtonInteractionEvent event, Member member) {
-        privateMessage(event, member, "Your game invite to " + this.opponentName + " was declined.");
+        privateMessage(event, member, "Your (" + this.gameName + ") invite to " + this.opponentName + " was declined.");
         event.getMessage().delete().queue();
         games = removeGame(games, this);
     }
 
     public void cancelInvitation(ButtonInteractionEvent event, Member member) {
-        privateMessage(event, member, "Your game invite to " + this.opponentName + " was cancelled.");
+        privateMessage(event, member, "Your (" + this.gameName + ") invite to " + this.opponentName + " was cancelled.");
         event.getMessage().delete().queue();
         games = removeGame(games, this);
     }

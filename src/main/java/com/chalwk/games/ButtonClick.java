@@ -5,8 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-import static com.chalwk.games.tictactoe.TicTacToe.makeMove;
-import static com.chalwk.games.tictactoe.TicTacToe.moveAllowed;
+import static com.chalwk.games.tictactoe.TicTacToe.*;
 import static com.chalwk.util.util.games;
 
 public class ButtonClick {
@@ -43,12 +42,12 @@ public class ButtonClick {
                         if (canClick(memberID, challengerID, event, "You are not the challenger. Unable to cancel."))
                             continue;
                         game.cancelInvitation(event, member);
-                    } else if (gameName.equals("Tic-Tac-Toe")) {
-                        if (!moveAllowed(buttonLabel, game)) {
-                            return;
-                        } else {
-                            makeMove(event, buttonLabel, game);
-                        }
+                    }
+                } else if (gameName.equals("Tic-Tac-Toe")) {
+                    if (!moveAllowed(buttonLabel, game) || !yourTurn(game, member)) {
+                        return;
+                    } else {
+                        makeMove(event, buttonLabel, game);
                     }
                 }
             }

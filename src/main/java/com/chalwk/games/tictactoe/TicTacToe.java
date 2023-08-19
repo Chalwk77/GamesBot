@@ -9,7 +9,10 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.chalwk.Main.getBotAvatar;
 import static com.chalwk.Main.getBotName;
@@ -18,12 +21,8 @@ import static com.chalwk.games.tictactoe.GameOver.gameOver;
 
 public class TicTacToe {
 
-    public boolean yourTurn(Game game, Member member) {
+    public static boolean yourTurn(Game game, Member member) {
         return member.getEffectiveName().equals(game.whos_turn);
-    }
-
-    public Map<String, int[]> getCellIndicators(Game game) {
-        return game.cell_indicators;
     }
 
     public static boolean moveAllowed(String buttonLabel, Game game) {
@@ -99,7 +98,7 @@ public class TicTacToe {
         return embed;
     }
 
-    public static void initTicTacToe(ButtonInteractionEvent event, Game game) {
+    public static void startTicTacToe(ButtonInteractionEvent event, Game game) {
 
         int boardLength = game.board.length;
         game.started = true;
@@ -187,8 +186,7 @@ public class TicTacToe {
 
     private static String printBoard(Game game) {
         int len = game.board.length;
-        String err = "Board size not supported: (" + len + "x" + len + ")";
-        if (len < 3 || len > 5) throw new IllegalStateException(err);
+        if (len < 3 || len > 5) throw new IllegalStateException("Board size not supported: (" + len + "x" + len + ")");
         return buildBoard(game);
     }
 

@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -39,13 +40,8 @@ public class Invite extends Throwable implements CommandInterface {
         String channelID = event.getChannel().getId();
 
         JSONObject settings = (gameName.equals("Tic-Tac-Toe")) ? ticTacToeConfig : hangmanConfig;
-        JSONArray config;
-        try {
-            config = settings.getJSONArray(guildID);
-        } catch (Exception e) {
-            event.reply(gameName + " is not setup for this Server. Use `/setup` to do this.").setEphemeral(true).queue();
-            return false;
-        }
+        JSONArray config = getConfig(event, gameName, settings, guildID);
+        if (config == null) return false;
 
         String configChannelID = config.get(0).toString();
         if (!configChannelID.equals(channelID)) {
@@ -54,6 +50,18 @@ public class Invite extends Throwable implements CommandInterface {
         }
 
         return true;
+    }
+
+    @Nullable
+    private static JSONArray getConfig(SlashCommandInteractionEvent event, String gameName, JSONObject settings, String guildID) {
+        JSONArray config;
+        try {
+            config = settings.getJSONArray(guildID);
+        } catch (Exception e) {
+            event.reply(gameName + " is not setup for this Server. Use `/setup` to do this.").setEphemeral(true).queue();
+            return null;
+        }
+        return config;
     }
 
     @Override

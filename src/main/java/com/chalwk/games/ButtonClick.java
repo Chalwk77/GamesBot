@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -71,14 +72,10 @@ public class ButtonClick {
     private static boolean allowClick(List<Role> roles, Game game, ButtonInteractionEvent event) {
 
         JSONObject settings = (game.gameName.equals("Tic-Tac-Toe")) ? ticTacToeConfig : hangmanConfig;
-
         String guildID = game.guild.getId();
-        JSONArray config;
-        try { // just in case
-            config = settings.getJSONArray(guildID);
-        } catch (Exception e) {
-            return false;
-        }
+
+        JSONArray config = getConfig(settings, guildID);
+        if (config == null) return false;
 
         String configRoleID = config.get(1).toString();
         if (!configRoleID.equals("null")) {
@@ -92,6 +89,17 @@ public class ButtonClick {
         }
 
         return true;
+    }
+
+    @Nullable
+    private static JSONArray getConfig(JSONObject settings, String guildID) {
+        JSONArray config;
+        try { // just in case
+            config = settings.getJSONArray(guildID);
+        } catch (Exception e) {
+            return null;
+        }
+        return config;
     }
 
     private static boolean canClick(String memberID, String playerID, ButtonInteractionEvent event, String message) {

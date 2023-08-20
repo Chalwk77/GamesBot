@@ -3,7 +3,6 @@ package com.chalwk.games;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.jetbrains.annotations.Nullable;
@@ -20,9 +19,6 @@ import static com.chalwk.util.util.games;
 public class ButtonClick {
 
     public static void onClick(ButtonInteractionEvent event) {
-
-        Channel channel = event.getChannel();
-        String channelID = channel.getId();
 
         Button button = event.getButton();
         Member member = event.getMember();
@@ -94,7 +90,7 @@ public class ButtonClick {
     @Nullable
     private static JSONArray getConfig(JSONObject settings, String guildID) {
         JSONArray config;
-        try { // just in case
+        try {
             config = settings.getJSONArray(guildID);
         } catch (Exception e) {
             return null;

@@ -8,12 +8,11 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static com.chalwk.Main.getBotAvatar;
 import static com.chalwk.Main.getBotName;
+import static com.chalwk.games.hangman.Hangman.setLayout;
 import static com.chalwk.games.tictactoe.TicTacToe.createBoard;
 import static com.chalwk.games.tictactoe.TicTacToe.startTicTacToe;
 import static com.chalwk.util.util.*;
@@ -43,9 +42,17 @@ public class Game {
     public char[][] board; // tictactoe
     public char symbol; // tictactoe
     public Map<String, int[]> cell_indicators = new HashMap<>(); // tictactoe
+    public List<Character> guesses = new ArrayList<>(); // hangman
     public String whos_turn;
     public boolean started;
+    public String word; // hangman
+    public boolean guessed_whole_word = false; // hangman
+    public int correct; // hangman
+    public String stage; // hangman
+    public String embedID; // hangman
+    public int state; // hangman
     private String guildID;
+    public String[] layout; // hangman
 
     public Game(SlashCommandInteractionEvent event, OptionMapping boardSize, OptionMapping gallowsDesign, String challengerID, String opponentID, String challengerName, String opponentName, String gameName) {
 
@@ -62,6 +69,8 @@ public class Game {
 
         if (this.gameName.equals("Tic-Tac-Toe")) {
             createBoard(boardSize, this);
+        } else if (this.gameName.equals("Hangman")) {
+            setLayout(gallowsDesign.getAsInt(), this);
         }
 
         assert this.guild != null;
@@ -75,10 +84,6 @@ public class Game {
 
     public void setTurn() {
         this.whos_turn = (this.whos_turn.equals(this.challengerName)) ? this.opponentName : this.challengerName;
-    }
-
-    public int getGameID() {
-        return this.gameID;
     }
 
     public EmbedBuilder getEmbed() {

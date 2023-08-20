@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import static com.chalwk.games.ButtonClick.onClick;
+import static com.chalwk.games.hangman.OnMessage.onMessage;
 
 public class EventListeners extends ListenerAdapter {
 
@@ -31,6 +32,6 @@ public class EventListeners extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-
+        onMessage(event);
     }
 }

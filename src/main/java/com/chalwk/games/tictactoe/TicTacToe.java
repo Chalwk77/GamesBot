@@ -16,6 +16,7 @@ import java.util.List;
 
 import static com.chalwk.Main.getBotAvatar;
 import static com.chalwk.Main.getBotName;
+import static com.chalwk.games.Game.createSubmissionEmbed;
 import static com.chalwk.games.Layout.boards;
 import static com.chalwk.games.tictactoe.GameOver.gameOver;
 
@@ -190,12 +191,8 @@ public class TicTacToe {
         return buildBoard(game);
     }
 
-    public static void showTicTacToeSubmission(SlashCommandInteractionEvent event, Game game) {
+    public static void tictactoeSubmission(SlashCommandInteractionEvent event, Game game) {
         EmbedBuilder embed = getEmbedBuilder(game);
-        List<Button> buttons = new ArrayList<>();
-        buttons.add(Button.success("accept", "\uD83D\uDFE2 Accept"));
-        buttons.add(Button.danger("decline", "\uD83D\uDD34 Decline"));
-        buttons.add(Button.secondary("cancel", "\uD83D\uDEAB Cancel"));
-        event.replyEmbeds(embed.build()).addActionRow(buttons).queue();
+        createSubmissionEmbed(event, embed);
     }
 }

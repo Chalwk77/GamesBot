@@ -1,3 +1,5 @@
 target/
 auth.token
 .idea/
+hangman.json
+tictactoe.json

@@ -20,8 +20,8 @@ import static com.chalwk.Main.hangmanConfig;
 import static com.chalwk.Main.ticTacToeConfig;
 import static com.chalwk.games.Layout.boards;
 import static com.chalwk.games.Layout.gallows;
-import static com.chalwk.games.hangman.Hangman.showHangmanSubmission;
-import static com.chalwk.games.tictactoe.TicTacToe.showTicTacToeSubmission;
+import static com.chalwk.games.hangman.Hangman.hangmanSubmission;
+import static com.chalwk.games.tictactoe.TicTacToe.tictactoeSubmission;
 import static com.chalwk.util.util.addGame;
 import static com.chalwk.util.util.games;
 
@@ -154,9 +154,9 @@ public class Invite extends Throwable implements CommandInterface {
     private void invitePlayer(SlashCommandInteractionEvent event) {
         Game game = new Game(event, board_size, gallows_design, challengerID, opponentID, challengerName, opponentName, gameName);
         if (gameName.equals("Tic-Tac-Toe")) {
-            showTicTacToeSubmission(event, game);
-        } else if (game.equals("Hangman")) {
-            showHangmanSubmission(event, game);
+            tictactoeSubmission(event, game);
+        } else if (gameName.equals("Hangman")) {
+            hangmanSubmission(event, game);
         }
         games = addGame(games, game);
     }

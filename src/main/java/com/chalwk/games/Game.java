@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 import java.util.*;
 
@@ -53,7 +54,19 @@ public class Game {
     public int state; // hangman
     public String[] layout; // hangman
 
-    public Game(SlashCommandInteractionEvent event, OptionMapping boardSize, OptionMapping gallowsDesign, String challengerID, String opponentID, String challengerName, String opponentName, String gameName) {
+    public Game(
+
+            //
+            // Game constructor for Tic-Tac-Toe & Hangman:
+            //
+            SlashCommandInteractionEvent event,
+            OptionMapping boardSize,
+            OptionMapping gallowsDesign,
+            String challengerID,
+            String opponentID,
+            String challengerName,
+            String opponentName,
+            String gameName) {
 
         this.guild = event.getGuild(); // both games
         this.challengerID = challengerID;
@@ -113,5 +126,13 @@ public class Game {
         privateMessage(event, member, "Your (" + this.gameName + ") invite to " + this.opponentName + " was cancelled.");
         event.getMessage().delete().queue();
         games = removeGame(games, this);
+    }
+
+    public static void createSubmissionEmbed(SlashCommandInteractionEvent event, EmbedBuilder embed) {
+        List<Button> buttons = new ArrayList<>();
+        buttons.add(Button.success("accept", "\uD83D\uDFE2 Accept"));
+        buttons.add(Button.danger("decline", "\uD83D\uDD34 Decline"));
+        buttons.add(Button.secondary("cancel", "\uD83D\uDEAB Cancel"));
+        event.replyEmbeds(embed.build()).addActionRow(buttons).queue();
     }
 }

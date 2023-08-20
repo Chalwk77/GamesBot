@@ -33,7 +33,7 @@ public class Invite extends Throwable implements CommandInterface {
     private String challengerName;
     private String opponentName;
 
-    private static boolean allowAction(SlashCommandInteractionEvent event, String gameName) {
+    private static boolean allowInvite(SlashCommandInteractionEvent event, String gameName) {
 
         String guildID = event.getGuild().getId();
         String channelID = event.getChannel().getId();
@@ -43,13 +43,13 @@ public class Invite extends Throwable implements CommandInterface {
         try {
             config = settings.getJSONArray(guildID);
         } catch (Exception e) {
-            event.reply(gameName + " is not setup. Use /setup to do this.").setEphemeral(true).queue();
+            event.reply(gameName + " is not setup for this Server. Use `/setup` to do this.").setEphemeral(true).queue();
             return false;
         }
 
         String configChannelID = config.get(0).toString();
         if (!configChannelID.equals(channelID)) {
-            event.reply("You cannot play " + gameName + " in this channel.").setEphemeral(true).queue();
+            event.reply("You cannot play (" + gameName + ") in this channel.").setEphemeral(true).queue();
             return false;
         }
 
@@ -122,9 +122,7 @@ public class Invite extends Throwable implements CommandInterface {
 
         setOptionData(board_size, gallows_design, opponent, game, member);
 
-        boolean allowAction = allowAction(event, gameName);
-        if (!allowAction) return;
-
+        if (!allowInvite(event, gameName)) return;
         if (opponent.getAsUser().isBot()) {
             event.reply("You cannot invite a bot to play " + gameName + ".").setEphemeral(true).queue();
         } else if (challengerID.equals(opponentID)) {

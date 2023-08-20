@@ -36,7 +36,7 @@ public class ButtonClick {
 
         for (Game game : games) {
 
-            if (!allowAction(channelID, roles, game, event)) continue;
+            if (!allowClick(roles, game, event)) continue;
 
             String gameName = game.gameName;
             String challengerID = game.challengerID;
@@ -68,24 +68,19 @@ public class ButtonClick {
         }
     }
 
-    private static boolean allowAction(String channelID, List<Role> roles, Game game, ButtonInteractionEvent event) {
+    private static boolean allowClick(List<Role> roles, Game game, ButtonInteractionEvent event) {
 
         JSONObject settings = (game.gameName.equals("Tic-Tac-Toe")) ? ticTacToeConfig : hangmanConfig;
 
         String guildID = game.guild.getId();
-        JSONArray config = settings.getJSONArray(guildID);
-        if (config == null) {
+        JSONArray config;
+        try { // just in case
+            config = settings.getJSONArray(guildID);
+        } catch (Exception e) {
             return false;
         }
 
-        // Check if this is the correct channel:
-        String configChannelID = config.get(0).toString();
         String configRoleID = config.get(1).toString();
-        if (!configChannelID.equals(channelID)) {
-            return false;
-        }
-
-        // If the role is defined, check if the user has the role:
         if (!configRoleID.equals("null")) {
             for (Role role : roles) {
                 if (role.getId().equals(configRoleID)) {

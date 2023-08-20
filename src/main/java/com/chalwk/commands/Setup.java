@@ -2,6 +2,7 @@
 package com.chalwk.commands;
 
 import com.chalwk.listeners.CommandInterface;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -60,6 +61,10 @@ public class Setup implements CommandInterface {
     public void execute(SlashCommandInteractionEvent event) throws IOException {
 
         Member member = event.getMember();
+        if (member != null && !member.hasPermission(Permission.ADMINISTRATOR)) {
+            event.reply("You must be an administrator to use this command.").setEphemeral(true).queue();
+            return;
+        }
 
         Guild guild = getGuild(event);
         OptionMapping game = event.getOption("game");

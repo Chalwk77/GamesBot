@@ -78,11 +78,19 @@ public class Game {
         this.started = false;
         this.gameID = games.length;
 
-        if (this.gameName.equals("Tic-Tac-Toe")) {
+        if (boardSize != null) {
             createBoard(boardSize, this);
-        } else if (this.gameName.equals("Hangman")) {
+        } else if (gallowsDesign != null) {
             setLayout(gallowsDesign.getAsInt(), this);
         }
+    }
+
+    public static void createSubmissionEmbed(SlashCommandInteractionEvent event, EmbedBuilder embed) {
+        List<Button> buttons = new ArrayList<>();
+        buttons.add(Button.success("accept", "\uD83D\uDFE2 Accept"));
+        buttons.add(Button.danger("decline", "\uD83D\uDD34 Decline"));
+        buttons.add(Button.secondary("cancel", "\uD83D\uDEAB Cancel"));
+        event.replyEmbeds(embed.build()).addActionRow(buttons).queue();
     }
 
     public String whoStarts() {
@@ -126,13 +134,5 @@ public class Game {
         privateMessage(event, member, "Your (" + this.gameName + ") invite to " + this.opponentName + " was cancelled.");
         event.getMessage().delete().queue();
         games = removeGame(games, this);
-    }
-
-    public static void createSubmissionEmbed(SlashCommandInteractionEvent event, EmbedBuilder embed) {
-        List<Button> buttons = new ArrayList<>();
-        buttons.add(Button.success("accept", "\uD83D\uDFE2 Accept"));
-        buttons.add(Button.danger("decline", "\uD83D\uDD34 Decline"));
-        buttons.add(Button.secondary("cancel", "\uD83D\uDEAB Cancel"));
-        event.replyEmbeds(embed.build()).addActionRow(buttons).queue();
     }
 }

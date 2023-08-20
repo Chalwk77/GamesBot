@@ -41,16 +41,14 @@ public class TicTacToe {
 
     public static void createBoard(OptionMapping boardSize, Game game) {
 
-        char[][] board = getBoard(game);
         String[] letters = game.letters;
-
         game.cell_indicators = new HashMap<>();
         game.board = boards[boardSize.getAsInt()];
 
-        String[] alphabet = Arrays.copyOfRange(letters, 0, board.length);
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board.length; col++) {
-                board[row][col] = game.filler;
+        String[] alphabet = Arrays.copyOfRange(letters, 0, game.board.length);
+        for (int row = 0; row < game.board.length; row++) {
+            for (int col = 0; col < game.board.length; col++) {
+                game.board[row][col] = game.filler;
                 game.cell_indicators.put(alphabet[row] + (col + 1), new int[]{col, row});
             }
         }

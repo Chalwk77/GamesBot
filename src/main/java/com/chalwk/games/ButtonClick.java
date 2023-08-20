@@ -36,7 +36,7 @@ public class ButtonClick {
 
         for (Game game : games) {
 
-            if (!allowAction(channelID, roles, game)) continue;
+            if (!allowAction(channelID, roles, game, event)) continue;
 
             String gameName = game.gameName;
             String challengerID = game.challengerID;
@@ -68,7 +68,7 @@ public class ButtonClick {
         }
     }
 
-    private static boolean allowAction(String channelID, List<Role> roles, Game game) {
+    private static boolean allowAction(String channelID, List<Role> roles, Game game, ButtonInteractionEvent event) {
 
         JSONObject settings = (game.gameName.equals("Tic-Tac-Toe")) ? ticTacToeConfig : hangmanConfig;
 
@@ -92,7 +92,7 @@ public class ButtonClick {
                     return true;
                 }
             }
-            // user does not have the role (send message)?
+            event.reply("You do not have the required role to play this game.").setEphemeral(true).queue();
             return false;
         }
 

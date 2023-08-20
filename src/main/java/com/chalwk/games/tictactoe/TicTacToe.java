@@ -35,10 +35,6 @@ public class TicTacToe {
         return game.board[cells[0]][cells[1]] == game.filler;
     }
 
-    private static char[][] getBoard(Game game) {
-        return game.board;
-    }
-
     public static void createBoard(OptionMapping boardSize, Game game) {
 
         String[] letters = game.letters;
@@ -74,15 +70,15 @@ public class TicTacToe {
         game.setTurn();
         game.board[row][col] = game.symbol;
 
-        EmbedBuilder embed = game.getEmbed();
-        embed.addField(name + " selected " + buttonLabel, "\n\n", true);
+        EmbedBuilder embed = getEmbedBuilder(game);
+        embed.addField(name + " selected " + buttonLabel, "\n\n", false);
         embed.setDescription("It is now " + game.whos_turn + "'s turn.");
         event.editMessageEmbeds(embed.build()).queue();
 
         gameOver(event, game);
     }
 
-    private static EmbedBuilder getEmbedBuilder(Game game) {
+    static EmbedBuilder getEmbedBuilder(Game game) {
 
         String botName = getBotName();
         String botAvatar = getBotAvatar();
@@ -183,7 +179,7 @@ public class TicTacToe {
         return sb.toString();
     }
 
-    private static String printBoard(Game game) {
+    static String printBoard(Game game) {
         int len = game.board.length;
         if (len < 3 || len > 5) throw new IllegalStateException("Board size not supported: (" + len + "x" + len + ")");
         return buildBoard(game);

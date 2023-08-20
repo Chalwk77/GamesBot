@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 import static com.chalwk.games.Layout.WINNING_COMBINATIONS;
+import static com.chalwk.games.tictactoe.TicTacToe.getEmbedBuilder;
 import static com.chalwk.util.util.games;
 import static com.chalwk.util.util.removeGame;
 
@@ -16,7 +17,7 @@ public class GameOver {
         Member member = event.getMember();
         assert member != null;
 
-        EmbedBuilder embed = game.getEmbed();
+        EmbedBuilder embed = getEmbedBuilder(game);
         if (state == 0) {
             embed.setDescription("Game Over! It's a draw!");
         } else {

@@ -72,14 +72,22 @@ public class util {
         return true;
     }
 
-    public static void processInvite(SlashCommandInteractionEvent event, OptionMapping opponent, String challengerID, String opponentID, OptionMapping option, String challengerName, String opponentName, JSONObject config, String gameName) {
+    public static void processInvite(
+            SlashCommandInteractionEvent event,
+            OptionMapping opponent,
+            String challengerID,
+            String opponentID,
+            OptionMapping option,
+            String challengerName,
+            String opponentName,
+            JSONObject config,
+            String gameName) {
         if (!allowInvite(event, config, gameName)) return;
         if (opponent.getAsUser().isBot()) {
             event.reply("You cannot invite a bot to play " + gameName + ".").setEphemeral(true).queue();
         } else if (challengerID.equals(opponentID)) {
             event.reply("You cannot invite yourself to play " + gameName + ".").setEphemeral(true).queue();
         } else {
-
             Game game = null;
             if (gameName.equals("Tic-Tac-Toe")) {
                 game = new Game(event, option, null, challengerID, opponentID, challengerName, opponentName, gameName);

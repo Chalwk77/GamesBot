@@ -9,17 +9,21 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.chalwk.Main.hangmanConfig;
+import static com.chalwk.Main.ticTacToeConfig;
 import static com.chalwk.games.Layout.boards;
 import static com.chalwk.games.Layout.gallows;
 import static com.chalwk.games.tictactoe.TicTacToe.showTicTacToeSubmission;
 import static com.chalwk.util.util.addGame;
 import static com.chalwk.util.util.games;
 
-public class Invite implements CommandInterface {
+public class Invite extends Throwable implements CommandInterface {
 
     private String challengerID;
     private String opponentID;
@@ -28,6 +32,29 @@ public class Invite implements CommandInterface {
     private String gameName;
     private String challengerName;
     private String opponentName;
+
+    private static boolean allowAction(SlashCommandInteractionEvent event, String gameName) {
+
+        String guildID = event.getGuild().getId();
+        String channelID = event.getChannel().getId();
+
+        JSONObject settings = (gameName.equals("Tic-Tac-Toe")) ? ticTacToeConfig : hangmanConfig;
+        JSONArray config;
+        try {
+            config = settings.getJSONArray(guildID);
+        } catch (Exception e) {
+            event.reply(gameName + " is not setup. Use /setup to do this.").setEphemeral(true).queue();
+            return false;
+        }
+
+        String configChannelID = config.get(0).toString();
+        if (!configChannelID.equals(channelID)) {
+            event.reply("You cannot play " + gameName + " in this channel.").setEphemeral(true).queue();
+            return false;
+        }
+
+        return true;
+    }
 
     @Override
     public String getName() {
@@ -94,6 +121,9 @@ public class Invite implements CommandInterface {
         assert member != null;
 
         setOptionData(board_size, gallows_design, opponent, game, member);
+
+        boolean allowAction = allowAction(event, gameName);
+        if (!allowAction) return;
 
         if (opponent.getAsUser().isBot()) {
             event.reply("You cannot invite a bot to play " + gameName + ".").setEphemeral(true).queue();

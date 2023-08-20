@@ -13,6 +13,7 @@ import java.util.*;
 import static com.chalwk.Main.getBotAvatar;
 import static com.chalwk.Main.getBotName;
 import static com.chalwk.games.hangman.Hangman.setLayout;
+import static com.chalwk.games.hangman.Hangman.startHangman;
 import static com.chalwk.games.tictactoe.TicTacToe.createBoard;
 import static com.chalwk.games.tictactoe.TicTacToe.startTicTacToe;
 import static com.chalwk.util.util.*;
@@ -31,33 +32,30 @@ public class Game {
     public final char player1 = 'X'; // tictactoe
     public final char player2 = 'O'; // tictactoe
     public final char filler = '-'; // tictactoe
-    public final String challengerID;
-    public final String opponentID;
-    final String challengerName;
-    final String opponentName;
-    final String gameName;
-    final int gameID;
-    private final SlashCommandInteractionEvent event;
-    public final Guild guild;
+    public final String challengerID; // both games
+    public final String opponentID; // both games
+    public final Guild guild; // both games
+    final String challengerName; // both games
+    final String opponentName; // both games
+    final String gameName; // both games
+    final int gameID; // both games
     public char[][] board; // tictactoe
     public char symbol; // tictactoe
     public Map<String, int[]> cell_indicators = new HashMap<>(); // tictactoe
     public List<Character> guesses = new ArrayList<>(); // hangman
-    public String whos_turn;
-    public boolean started;
+    public String whos_turn; // both games
+    public boolean started; // both games
     public String word; // hangman
     public boolean guessed_whole_word = false; // hangman
     public int correct; // hangman
     public String stage; // hangman
     public String embedID; // hangman
     public int state; // hangman
-    private String guildID;
     public String[] layout; // hangman
 
     public Game(SlashCommandInteractionEvent event, OptionMapping boardSize, OptionMapping gallowsDesign, String challengerID, String opponentID, String challengerName, String opponentName, String gameName) {
 
-        this.guild = event.getGuild();
-        this.event = event;
+        this.guild = event.getGuild(); // both games
         this.challengerID = challengerID;
         this.opponentID = opponentID;
         this.challengerName = challengerName;
@@ -72,8 +70,6 @@ public class Game {
         } else if (this.gameName.equals("Hangman")) {
             setLayout(gallowsDesign.getAsInt(), this);
         }
-
-        assert this.guild != null;
     }
 
     public String whoStarts() {
@@ -102,6 +98,8 @@ public class Game {
         event.getMessage().delete().queue();
         if (this.gameName.equals("Tic-Tac-Toe")) {
             startTicTacToe(event, this);
+        } else if (this.gameName.equals("Hangman")) {
+            startHangman(event, this);
         }
     }
 

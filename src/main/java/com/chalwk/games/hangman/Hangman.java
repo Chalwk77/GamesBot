@@ -4,13 +4,12 @@ package com.chalwk.games.hangman;
 import com.chalwk.games.Game;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 import static com.chalwk.Main.*;
 import static com.chalwk.games.Layout.gallows;
@@ -18,6 +17,7 @@ import static com.chalwk.util.util.games;
 import static com.chalwk.util.util.removeGame;
 
 public class Hangman {
+
     static boolean yourTurn(MessageReceivedEvent event, Game game, Member member) {
         if (!member.getEffectiveName().equals(game.whos_turn)) {
             event.getMessage().delete().queue();
@@ -146,6 +146,21 @@ public class Hangman {
                 .retrieveMessageById(getEmbedID(game))
                 .queue(message -> message.editMessageEmbeds(embed.build()).queue());
     }
+
+    public static void showHangmanSubmission(SlashCommandInteractionEvent event, Game game) {
+        game.state = 0;
+        setStage(game.state, game); // dead hangman
+
+        EmbedBuilder embed = getEmbed(game);
+        embed.setDescription("You have been invited to play Hangman.");
+
+        List<Button> buttons = new ArrayList<>();
+        buttons.add(Button.success("accept", "\uD83D\uDFE2 Accept"));
+        buttons.add(Button.danger("decline", "\uD83D\uDD34 Decline"));
+        buttons.add(Button.secondary("cancel", "\uD83D\uDEAB Cancel"));
+        event.replyEmbeds(embed.build()).addActionRow(buttons).queue();
+    }
+
 
     static String printHangman(Game game) {
         return "```" + game.stage + "```";

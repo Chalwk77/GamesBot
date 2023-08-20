@@ -22,8 +22,7 @@ public class util {
                 new String[]{channel_id.getAsString(),
                         role_id == null ? null : role_id.getAsString()
                 });
-        writeJSON(config, fileName);
-        System.out.println("Writing to " + fileName + ": " + config.toString());
+        writeJSON(config.toString(4), fileName);
     }
 
     public static <T> void privateMessage(T event, Member member, String Message) {

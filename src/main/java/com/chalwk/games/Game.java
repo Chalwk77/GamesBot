@@ -39,12 +39,13 @@ public class Game {
     final String gameName;
     final int gameID;
     private final SlashCommandInteractionEvent event;
-    private final Guild guild;
+    public final Guild guild;
     public char[][] board; // tictactoe
     public char symbol; // tictactoe
     public Map<String, int[]> cell_indicators = new HashMap<>(); // tictactoe
     public String whos_turn;
     public boolean started;
+    private String guildID;
 
     public Game(SlashCommandInteractionEvent event, OptionMapping boardSize, OptionMapping gallowsDesign, String challengerID, String opponentID, String challengerName, String opponentName, String gameName) {
 
@@ -62,6 +63,8 @@ public class Game {
         if (this.gameName.equals("Tic-Tac-Toe")) {
             createBoard(boardSize, this);
         }
+
+        assert this.guild != null;
     }
 
     public String whoStarts() {

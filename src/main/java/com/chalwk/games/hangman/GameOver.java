@@ -3,12 +3,18 @@ package com.chalwk.games.hangman;
 
 import com.chalwk.games.Game;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class GameOver {
     static boolean gameOver(StringBuilder word, Game game, MessageReceivedEvent event, EmbedBuilder embed) {
         if (word.length() == game.correct || game.guessed_whole_word) {
-            embed.addField("\uD83D\uDFE2 GAME OVER. The word was (" + word + "). " + game.whos_turn + " wins!", " ", false);
+
+            Member member = event.getMember();
+            assert member != null;
+            String name = member.getEffectiveName();
+
+            embed.addField("\uD83D\uDFE2 GAME OVER. The word was (" + word + "). " + name + " wins!", " ", false);
             embed.setColor(0x00ff00);
             Hangman.editEmbed(game, event, embed);
             return true;

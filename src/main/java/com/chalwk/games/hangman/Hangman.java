@@ -139,6 +139,7 @@ public class Hangman {
 
         embed.setDescription("It's now " + game.whos_turn + "'s turn.");
         embed.addField("Characters:", guess_box, false);
+        embed.addField("Guess a letter or the word: " + game.word.length() + " characters", "", false);
         embed.addField("Guesses: " + showGuesses(game.guesses), " ", false);
         embed.setColor(color);
         editEmbed(game, event, embed);

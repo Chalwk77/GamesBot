@@ -2,14 +2,12 @@
 
 A Discord Bot written in Java using the [JDA](https://github.com/discord-jda/JDA) library.
 
-Games bot aims to bring a variety of classic pen & paper games to discord, starting with Hangman and Tic Tac Toe.
-More to come in the future!
+GamesBot aims to bring a variety of classic pen & paper games to discord, starting with Hangman and Tic Tac Toe. More to
+come in the future!
 
 ## Games:
 
 - Hangman (2 player hangman)
-
-
 - Tic Tac Toe (2 player hangman)
 
 Commands:
@@ -22,3 +20,6 @@ Commands:
 
 - `/tictactoe` `opponent` `board size`
   - Use this command to start a game of Tic Tac Toe.
+
+Bot Token:
+Create a file called *auth.token* in the root directory and put your bot token in it.

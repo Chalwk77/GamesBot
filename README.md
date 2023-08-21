@@ -17,12 +17,8 @@ Commands:
 - `/setup` `game` `channel id`
   - Use this command to set up a game in a channel.
 
----
-
 - `/hangman` `opponent` `gallows design`
   - Use this command to start a game of hangman.
-
----
 
 - `/tictactoe` `opponent` `board size`
   - Use this command to start a game of Tic Tac Toe.

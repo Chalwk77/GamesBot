@@ -5,6 +5,7 @@ import com.chalwk.listeners.CommandInterface;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -81,15 +82,21 @@ public class Setup implements CommandInterface {
             event.reply("Invalid role ID.").setEphemeral(true).queue();
         } else if (game.getAsString().equals("tictactoe")) {
             saveConfig(guild, channelID, roleID, ticTacToeConfig, "tictactoe.json");
-            event.reply("Tic-Tac-Toe has been setup in the " + guild.getTextChannelById(channelID.getAsLong()).getAsMention() + " channel.").setEphemeral(true).queue();
+            event.reply("Tic-Tac-Toe has been setup in the " + getChannelName(guild, channelID) + " channel.").setEphemeral(true).queue();
         } else if (game.getAsString().equals("hangman")) {
             saveConfig(guild, channelID, roleID, hangmanConfig, "hangman.json");
-            event.reply("Hangman has been setup in the " + guild.getTextChannelById(channelID.getAsLong()).getAsMention() + " channel.").setEphemeral(true).queue();
+            event.reply("Hangman has been setup in the " + getChannelName(guild, channelID) + " channel.").setEphemeral(true).queue();
         } else {
             event.reply("Invalid game or something went wrong!").setEphemeral(true).queue();
         }
     }
 
     private record optionData(OptionData games, OptionData channelID, OptionData roleID) {
+    }
+
+    private String getChannelName(Guild guild, OptionMapping channelID) {
+        Channel channel = guild.getTextChannelById(channelID.getAsLong());
+        assert channel != null;
+        return channel.getAsMention();
     }
 }

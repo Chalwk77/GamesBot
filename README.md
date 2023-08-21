@@ -2,7 +2,7 @@
 
 A Discord Bot written in Java using the [JDA](https://github.com/discord-jda/JDA) library.
 
-GamesBot aims to bring a variety of classic pen & paper games to discord, starting with Hangman and Tic Tac Toe. More to
+GamesBot aims to bring a variety of classic pen & paper games to Discord, starting with Hangman and Tic Tac Toe. More to
 come in the future!
 
 ## Games:
